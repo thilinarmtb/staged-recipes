@@ -1,0 +1,39 @@
+{% set name = "occa-transpiler" %}
+{% set version = "1.1" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: https://github.com/libocca/occa-transpiler/releases/download/v{{ version }}/occa-transpiler-{{ version }}-including-submodules.tar.gz
+  sha256: 4664b28e6ea9ce87f21cf0fe93f39d76e26ab5115ab9300a08b41053d12e862b
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - cmake
+    - make
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
+  host:
+    - clangdev=17.0.6
+  run:
+    - clangdev=17.0.6
+
+test:
+  commands:
+    - test -f $PREFIX/lib/libocca-transpiler.so
+
+about:
+  home: https://github.com/libocca/occa-transpiler.git
+  summary: 'Transpile OCCA kernels to native GPU kernels (CUDA, HIP, etc.)'
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - thilinarmtb
